@@ -14,17 +14,17 @@ interface VideoListProps {
     handleVideoChange: (video: Video) => void;
     isTeacher: boolean
     teacherName?: string | null;
+    onSuccessfulAction: () => void;
 }
 
-const VideoList: React.FC<VideoListProps> = ({ videos, currentVideo, handleVideoChange, isTeacher, teacherName }) => {
-    // Sort the videos alphabetically by 'nome_video'
+const VideoList: React.FC<VideoListProps> = ({ videos, currentVideo, handleVideoChange, isTeacher, teacherName, onSuccessfulAction }) => {
     const sortedVideos = [...videos].sort((a, b) =>
         a.nome_video.localeCompare(b.nome_video)
     );
 
     return (
         <Card>
-            <Card.Header>Aulas <span style={{fontWeight:"700"}}>{"- "+teacherName}</span></Card.Header>
+            <Card.Header>Aulas <span style={{ fontWeight: "700" }}>{"- " + teacherName}</span></Card.Header>
             <Table striped bordered hover>
                 <tbody>
                     {sortedVideos.length > 0 ? (
@@ -51,7 +51,7 @@ const VideoList: React.FC<VideoListProps> = ({ videos, currentVideo, handleVideo
             </Table>
             {isTeacher && (
                 <CardBody>
-                    <VideoForm />
+                    <VideoForm onSuccessfulAction={onSuccessfulAction} />
                 </CardBody>
             )}
         </Card>
